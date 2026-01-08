@@ -6,6 +6,16 @@ $hasil1 = $conn->query($sql1);
 //menghitung jumlah baris data article
 $jumlah_article = $hasil1->num_rows; 
 ?>
+<?php
+// hitung jumlah gallery
+$sql_gallery = "SELECT COUNT(*) AS total FROM gallery";
+$result_gallery = $conn->query($sql_gallery);
+$data_gallery = $result_gallery->fetch_assoc();
+
+$jumlah_gallery = $data_gallery['total'];
+
+?>
+
 <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center pt-4">
     <div class="col">
         <div class="card border border-info mb-3 shadow" style="max-width: 18rem;">
@@ -26,10 +36,10 @@ $jumlah_article = $hasil1->num_rows;
             <div class="card-body">
                 <div class="d-flex justify-content-between">
                     <div class="p-3">
-                        <h5 class="card-title"><i class="bi bi-camera"></i> Gallery</h5> 
+                        <h5 class="card-title"><i class="bi bi-newspaper"></i> Gallery</h5> 
                     </div>
                     <div class="p-3">
-                        <span class="badge rounded-pill text-bg-info fs-2">0</span>
+                        <span class="badge rounded-pill text-bg-info fs-2"><?= $jumlah_gallery; ?></span>
                     </div> 
                 </div>
             </div>

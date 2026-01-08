@@ -64,7 +64,7 @@ include "koneksi.php";
     <section id="hero" class="text-center p-5 bg-info-subtle text-lg-start">
         <div class="container">
             <div class="d-lg-flex flex-lg-row-reverse align-items-center">
-                <img src = "Drama.jpeg" class="img-fluid" width="600">
+                <img src="img/Drama.jpeg" class="img-fluid" width="600">
                 <div>
                     <h1 class="fw-bold display-4">
                         Info Drama China Terbaru dan Terpopuler
@@ -117,37 +117,42 @@ include "koneksi.php";
 
       <!-- Gallery begin -->
        <section id="Gallery" class="text-center p-5 bg-info-subtle">
-        <div class="container">
-            <h1 class="fw-bold display-4 pb-3">Gallery Drama-Drama Populer 2025</h1>
-            <div id="carouselExample" class="carousel slide">
-        <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="FOF.jpeg" class="d-block w-100" alt="Drama Fangs Of Fortune">
-        </div>
-        <div class="carousel-item">
-            <img src="LoveAmb.jpeg" class="d-block w-100" alt="Drama Love Ambition">
-        </div>
-        <div class="carousel-item">
-            <img src="MoonMys.jpeg" class="d-block w-100" alt="Drama Moonlight Mystique">
-        </div>
-            <div class="carousel-item">
-            <img src="LOTFG.jpeg" class="d-block w-100" alt="Drama Legend Of The Female General">
-        </div>
-            <div class="carousel-item">
-            <img src="YYY.jpeg" class="d-block w-100" alt="Drama Yummy Yummy Yummy">
-        </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-        </div>
-        </div>
-    </section>
+  <div class="container">
+    <h1 class="fw-bold display-4 pb-3">Gallery</h1>
+
+    <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+
+        <?php
+        $sql = "SELECT gambar FROM gallery ORDER BY id DESC";
+        $hasil = $conn->query($sql);
+
+        $active = true;
+        while ($row = $hasil->fetch_assoc()) {
+        ?>
+          <div class="carousel-item <?= $active ? 'active' : '' ?>">
+            <img src="img/<?= $row['gambar'] ?>" class="d-block w-100" alt="Gallery image">
+          </div>
+        <?php
+          $active = false;
+        }
+        ?>
+
+      </div>
+
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section>
+
        <!-- gallery end -->
 
         <!-- footer begin -->
