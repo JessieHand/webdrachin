@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 08, 2026 at 12:08 PM
+-- Generation Time: Jan 14, 2026 at 07:33 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,19 +56,42 @@ INSERT INTO `article` (`id`, `judul`, `isi`, `gambar`, `tanggal`, `username`) VA
 
 CREATE TABLE `gallery` (
   `id` int(11) NOT NULL,
-  `gambar` varchar(255) NOT NULL
+  `deskripsi` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `gambar` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `tanggal` datetime DEFAULT NULL,
+  `username` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `gallery`
 --
 
-INSERT INTO `gallery` (`id`, `gambar`) VALUES
-(1, 'FOF.jpeg'),
-(2, 'LoveAmb.jpeg'),
-(3, 'MoonMys.jpeg'),
-(4, 'YYY.jpeg'),
-(5, 'LOTFG.jpeg');
+INSERT INTO `gallery` (`id`, `deskripsi`, `gambar`, `tanggal`, `username`) VALUES
+(1, 'Fangs Of Fortune', 'FOF.jpeg', '2026-01-08 14:24:32', 'admin'),
+(2, 'Love Ambition', 'LoveAmb.jpeg', '2026-01-08 14:24:32', 'admin'),
+(3, 'Moonlight Mystique', 'MoonMys.jpeg', '2026-01-08 14:26:32', 'admin'),
+(4, 'Yummy Yummy Yummy', 'YYY.jpeg', '2026-01-08 14:27:32', 'admin'),
+(5, 'Legend Of The Female General', 'LOTFG.jpeg', '2026-01-08 14:30:32', 'admin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profile`
+--
+
+CREATE TABLE `profile` (
+  `username` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `foto` text CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `profile`
+--
+
+INSERT INTO `profile` (`username`, `password`, `foto`) VALUES
+('Jessie', 'jessie', '20260114131514.jpg'),
+('april', 'april', '20260114125143.jpg');
 
 -- --------------------------------------------------------
 
@@ -88,7 +111,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `foto`) VALUES
-(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', '');
+(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', ''),
+(2, 'april', '37d153a06c79e99e4de5889dbe2e7c57', '');
 
 --
 -- Indexes for dumped tables
@@ -132,7 +156,7 @@ ALTER TABLE `gallery`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
