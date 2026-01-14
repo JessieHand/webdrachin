@@ -1,4 +1,25 @@
 <?php
+// ambil username dari session
+$username = $_SESSION['username'];
+
+// ambil foto profile dari database
+$stmt = $conn->prepare("SELECT foto FROM profile WHERE username=? LIMIT 1");
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$data_user = $stmt->get_result()->fetch_assoc();
+$stmt->close();
+
+// tentukan foto
+$foto = $data_user['foto'] ?? '';
+$fotoPath = "img/" . $foto;
+
+// kalau belum ada foto / file tidak ada → pakai default
+if ($foto == '' || !file_exists($fotoPath)) {
+    $fotoPath = "img/default.jpg"; 
+}
+?>
+
+<?php
 //query untuk mengambil data article
 $sql1 = "SELECT * FROM article ORDER BY tanggal DESC";
 $hasil1 = $conn->query($sql1);
@@ -15,6 +36,19 @@ $data_gallery = $result_gallery->fetch_assoc();
 $jumlah_gallery = $data_gallery['total'];
 
 ?>
+
+<div class="text-center mt-4 mb-3">
+    <div class="fs-5 text-muted">Selamat Datang,</div>
+
+    <div class="fw-bold text-info fs-2">
+        <?= htmlspecialchars($username) ?>
+    </div>
+
+    <img src="<?= $fotoPath ?>"
+         class="rounded-circle shadow my-3"
+         style="width:150px; height:150px; object-fit:cover;"
+         alt="Foto Profil">
+</div>
 
 <div class="row row-cols-1 row-cols-md-4 g-4 justify-content-center pt-4">
     <div class="col">

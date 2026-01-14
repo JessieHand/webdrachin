@@ -35,7 +35,7 @@ if (!isset($_SESSION['username'])) {
     		<!-- nav begin -->
     <nav class="navbar navbar-expand-sm bg-body-tertiary sticky-top bg-info-subtle">
     <div class="container">
-        <a class="navbar-brand" target="_blank" href=".">My Daily Journal</a>
+        <a class="navbar-brand" target="_blank" href=".">List Drama Update</a>
         <button
         class="navbar-toggler"
         type="button"
@@ -63,7 +63,8 @@ if (!isset($_SESSION['username'])) {
                     <?= $_SESSION['username']?>
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="logout.php">Logout</a></li> 
+                    <li><a class="dropdown-item" href="admin.php?page=profile">Profile</a></li>
+                    <li><a class="dropdown-item" href="logout.php">Logout</a></li>  
                 </ul>
             </li> 
         </ul>

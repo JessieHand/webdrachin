@@ -8,7 +8,7 @@
 
     <div class="col-md-6">
       <div class="input-group">
-        <input type="text" id="search" class="form-control" placeholder="Cari (nama file) minimal 3 karakter">
+        <input type="text" id="search" class="form-control" placeholder="Cari Judul minimal 3 karakter">
         <span class="input-group-text"><i class="bi bi-search"></i></span>
       </div>
     </div>
@@ -20,6 +20,7 @@
         <thead class="table-dark">
           <tr>
             <th>No</th>
+            <th class="w-50">Deskripsi</th>
             <th class="w-50">Gambar</th>
             <th class="w-25">Aksi</th>
           </tr>
@@ -28,31 +29,34 @@
       </table>
     </div>
 
-    <!-- Modal Tambah -->
-    <div class="modal fade" id="modalTambah" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h1 class="modal-title fs-5">Tambah Gallery</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<!-- Modal Tambah -->
+<div class="modal fade" id="modalTambah" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Tambah Gallery</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <form method="post" action="" enctype="multipart/form-data">
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Deskripsi</label>
+            <textarea class="form-control" placeholder="Tuliskan Deskripsi Gallery" name="deskripsi" required></textarea>
           </div>
 
-          <form method="post" action="" enctype="multipart/form-data">
-            <div class="modal-body">
-              <div class="mb-3">
-                <label class="form-label">Gambar</label>
-                <input type="file" class="form-control" name="gambar" required>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <input type="submit" value="simpan" name="simpan" class="btn btn-primary">
-            </div>
-          </form>
-
+          <div class="mb-3">
+            <label class="form-label">Gambar</label>
+            <input type="file" class="form-control" name="gambar" required>
+          </div>
         </div>
-      </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <input type="submit" value="simpan" name="simpan" class="btn btn-primary">
+        </div>
+      </form>
+
     </div>
   </div>
 </div>
@@ -80,8 +84,11 @@
 <?php
 include "upload_foto.php";
 
-// SIMPAN (INSERT)
+// Simpan 
 if (isset($_POST['simpan'])) {
+  $deskripsi = $_POST['deskripsi'];
+  $tanggal   = date("Y-m-d H:i:s");
+  $username  = $_SESSION['username'];
   $nama_gambar = $_FILES['gambar']['name'];
 
   if ($nama_gambar == '') {
@@ -97,8 +104,8 @@ if (isset($_POST['simpan'])) {
 
   $gambar = $cek_upload['message'];
 
-  $stmt = $conn->prepare("INSERT INTO gallery (gambar) VALUES (?)");
-  $stmt->bind_param("s", $gambar);
+  $stmt = $conn->prepare("INSERT INTO gallery (deskripsi, gambar, tanggal, username) VALUES (?,?,?,?)");
+  $stmt->bind_param("ssss", $deskripsi, $gambar, $tanggal, $username);
   $simpan = $stmt->execute();
 
   if ($simpan) {
@@ -111,12 +118,15 @@ if (isset($_POST['simpan'])) {
   $conn->close();
 }
 
+
 // HAPUS
 if (isset($_POST['hapus'])) {
-  $id     = $_POST['id'];
+  $id = $_POST['id'];
   $gambar = $_POST['gambar'];
 
-  if ($gambar != '') @unlink("img/" . $gambar);
+  if ($gambar != '') {
+    @unlink("img/" . $gambar);
+  }
 
   $stmt = $conn->prepare("DELETE FROM gallery WHERE id=?");
   $stmt->bind_param("i", $id);
@@ -131,4 +141,5 @@ if (isset($_POST['hapus'])) {
   $stmt->close();
   $conn->close();
 }
+
 ?>

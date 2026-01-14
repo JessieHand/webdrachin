@@ -117,14 +117,14 @@ include "koneksi.php";
 
       <!-- Gallery begin -->
        <section id="Gallery" class="text-center p-5 bg-info-subtle">
-  <div class="container">
+    <div class="container">
     <h1 class="fw-bold display-4 pb-3">Gallery</h1>
 
     <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
       <div class="carousel-inner">
 
         <?php
-        $sql = "SELECT gambar FROM gallery ORDER BY id DESC";
+        $sql = "SELECT gambar, deskripsi FROM gallery ORDER BY id DESC";
         $hasil = $conn->query($sql);
 
         $active = true;
@@ -132,7 +132,11 @@ include "koneksi.php";
         ?>
           <div class="carousel-item <?= $active ? 'active' : '' ?>">
             <img src="img/<?= $row['gambar'] ?>" class="d-block w-100" alt="Gallery image">
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+          <div class="fw-bold"><?= $row["deskripsi"] ?></div>
           </div>
+          </div>
+
         <?php
           $active = false;
         }
